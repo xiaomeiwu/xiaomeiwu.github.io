@@ -16,62 +16,75 @@
     <script src="./js/jssdk.js"></script>
     <script src="./js/keerworld.min.js"></script>
     <script src="./js/valid_tbl.js"></script>
-    <script>
-      main()
-      function main() {
-        KEER_Main.Init('main_canvas_container')
-        if (!KEER_Main.Load('A50', 'A1-H2.4')) {
-          console.log('Load failed...')
+    <style>
+      .app_loading {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 300;
+      }
+      .app_loading .bg {
+        background-color: rgba(0, 0, 0, 0.2);
+        width: 100%;
+        height: 100%;
+      }
+      .app_loading .loader {
+        width: 80px;
+        height: 80px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        border-radius: 50px;
+        transform: translate(-50%, -50%);
+        border: 4px solid #ddd;
+        border-top-color: #fff;
+        animation: loading 1s infinite;
+      }
+      .app_loading .text {
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        position: absolute;
+        text-align: center;
+        font-size: 12px;
+        left: 50%;
+        top: 50%;
+        border-radius: 50px;
+        transform: translate(-50%, -50%);
+      }
+      @keyframes loading {
+        0% {
+          transform: translate(-50%, -50%) rotate(0deg);
         }
-        KEER_Main.loaded_cb = loaded
-      }
-      function loaded(head_succ, body_succ) {
-        //KEER_Main.Load("B100", "A3-C2.1");
-        //KEER_Main.loaded_cb = loaded2;
-        //KEER_Main.SetCameraAndShot(3, "test");
-        if (!KEER_Main.IsAutoRotate()) {
-          KEER_Main.ToggleRotation()
+        100% {
+          transform: translate(-50%, -50%) rotate(360deg);
         }
       }
-      function loaded2(head_succ, body_succ) {
-        KEER_Main.ToggleRotation()
-      }
-      var index = 0
-      function next_ring() {
-        var i = 0
-        for (k in valid_tbl) {
-          if (i == index) {
-            tbl = valid_tbl[k]
-            KEER_Main.Load(k, tbl[0])
-            break
-          }
-          i++
-        }
-        index++
-      }
-      function test() {
-        console.log('test')
-      }
-      function goHome() {
-        console.log(wx.miniProgram.navigateBack)
-        wx.miniProgram.navigateBack()
-      }
-    </script>
+    </style>
   </head>
   <body>
+    <div class="app_loading">
+      <div class="bg"></div>
+      <span class="loader"> </span>
+      <span class="text">
+        加载中...
+      </span>
+    </div>
     <div
       id="main_canvas_container"
-      style="background-color: blanchedalmond;"
+      style="background-color: blanchedalmond; display: none;"
     ></div>
     <!-- <button class="absolute zIndex-200" onclick="next_ring();">Next</button> -->
     <div
       class="keer_home absolute z-200"
-      style="bottom: 20vh;"
+      style="bottom: 20vh; display: none;"
       onclick="goHome()"
     >
       <span class="icon iconfont icon-home"></span>
     </div>
-    <div class="keer_menu absolute z-200">
+    <div class="keer_menu absolute z-200" style="display: none;">
       <div>
         <span class="icon iconfont icon-Circle"></span>
         <span>设计</span>
@@ -89,7 +102,7 @@
         <span>试戴</span>
       </div>
     </div>
-    <div class="keer_operate absolute z-200">
+    <div class="keer_operate absolute z-200" style="display: none;">
       <div>
         <span class="icon iconfont icon-daizi"></span>
         <span>方案袋</span>
@@ -106,4 +119,64 @@
       </div>
     </div>
   </body>
+  <script>
+    const loading = [document.querySelector('.app_loading')]
+    const content = [
+      document.querySelector('#main_canvas_container'),
+      document.querySelector('.keer_home'),
+      document.querySelector('.keer_menu'),
+      document.querySelector('.keer_operate')
+    ]
+    function showLoading() {
+      ;[...loading].forEach((i) => (i.style.display = ''))
+      ;[...content].forEach((i) => (i.style.display = 'none'))
+    }
+    function hideLoading() {
+      ;[...loading].forEach((i) => (i.style.display = 'none'))
+      ;[...content].forEach((i) => (i.style.display = ''))
+    }
+  </script>
+  <script>
+    main()
+    function main() {
+      showLoading()
+      KEER_Main.Init('main_canvas_container')
+      if (!KEER_Main.Load('A50', 'A1-H2.4')) {
+        console.log('Load failed...')
+      }
+      KEER_Main.loaded_cb = loaded
+    }
+    function loaded(head_succ, body_succ) {
+      //KEER_Main.Load("B100", "A3-C2.1");
+      //KEER_Main.loaded_cb = loaded2;
+      //KEER_Main.SetCameraAndShot(3, "test");
+      hideLoading()
+      if (!KEER_Main.IsAutoRotate()) {
+        KEER_Main.ToggleRotation()
+      }
+    }
+    function loaded2(head_succ, body_succ) {
+      KEER_Main.ToggleRotation()
+    }
+    var index = 0
+    function next_ring() {
+      var i = 0
+      for (k in valid_tbl) {
+        if (i == index) {
+          tbl = valid_tbl[k]
+          KEER_Main.Load(k, tbl[0])
+          break
+        }
+        i++
+      }
+      index++
+    }
+    function test() {
+      console.log('test')
+    }
+    function goHome() {
+      console.log(wx.miniProgram.navigateBack)
+      wx.miniProgram.navigateBack()
+    }
+  </script>
 </html>

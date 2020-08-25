@@ -19,6 +19,7 @@
 .icon {
   font-size: 22px;
   text-align: center;
+  color: pink;
 }
 .keer_home {
   background-color: #eee;
@@ -45,10 +46,11 @@
   display: inline-flex;
   justify-content: center;
   flex-direction: column;
+  color: #666;
 }
 .keer_operate {
   padding: 10px 0;
-  background-color: #ddd;
+  border-top: 1px solid #eee;
   width: 100%;
   bottom: 0px;
   display: flex;
@@ -58,6 +60,7 @@
   display: inline-flex;
   justify-content: center;
   flex-direction: column;
+  color: #666;
 }
 .keer_operate > div:last-child span {
   background-color: pink;
