@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="./js/b4w.min.js"></script>
+    <title>千叶珠宝</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1.0, user-scalable=no, width=device-width"
+    />
+    <link
+      rel="stylesheet"
+      href="https://at.alicdn.com/t/font_2012881_8chlej469j7.css"
+    />
+    <link rel="stylesheet" href="./js/keerworld.min.css" />
+    <script src="./js/jssdk.js"></script>
+    <script src="./js/keerworld.min.js"></script>
+    <script src="./js/valid_tbl.js"></script>
+    <script>
+      main()
+      function main() {
+        KEER_Main.Init('main_canvas_container')
+        if (!KEER_Main.Load('A50', 'A1-H2.4')) {
+          console.log('Load failed...')
+        }
+        KEER_Main.loaded_cb = loaded
+      }
+      function loaded(head_succ, body_succ) {
+        //KEER_Main.Load("B100", "A3-C2.1");
+        //KEER_Main.loaded_cb = loaded2;
+        //KEER_Main.SetCameraAndShot(3, "test");
+        if (!KEER_Main.IsAutoRotate()) {
+          KEER_Main.ToggleRotation()
+        }
+      }
+      function loaded2(head_succ, body_succ) {
+        KEER_Main.ToggleRotation()
+      }
+      var index = 0
+      function next_ring() {
+        var i = 0
+        for (k in valid_tbl) {
+          if (i == index) {
+            tbl = valid_tbl[k]
+            KEER_Main.Load(k, tbl[0])
+            break
+          }
+          i++
+        }
+        index++
+      }
+      function test() {
+        console.log('test')
+      }
+      function goHome() {
+        console.log(wx.miniProgram.navigateBack)
+        wx.miniProgram.navigateBack()
+      }
+    </script>
+  </head>
+  <body>
+    <div
+      id="main_canvas_container"
+      style="background-color: blanchedalmond;"
+    ></div>
+    <!-- <button class="absolute zIndex-200" onclick="next_ring();">Next</button> -->
+    <div
+      class="keer_home absolute z-200"
+      style="bottom: 20vh;"
+      onclick="goHome()"
+    >
+      <span class="icon iconfont icon-home"></span>
+    </div>
+    <div class="keer_menu absolute z-200">
+      <div>
+        <span class="icon iconfont icon-Circle"></span>
+        <span>设计</span>
+      </div>
+      <div>
+        <span class="icon iconfont icon-diamond"></span>
+        <span>选钻</span>
+      </div>
+      <div>
+        <span class="icon iconfont icon-pencil"></span>
+        <span>印记</span>
+      </div>
+      <div>
+        <span class="icon iconfont icon-hand"></span>
+        <span>试戴</span>
+      </div>
+    </div>
+    <div class="keer_operate absolute z-200">
+      <div>
+        <span class="icon iconfont icon-daizi"></span>
+        <span>方案袋</span>
+      </div>
+      <div>
+        <span class="icon iconfont icon-kefu"></span>
+        <span>咨询</span>
+      </div>
+      <div>
+        <span>$-,-</span>
+      </div>
+      <div onclick="test()">
+        <span>确认设计</span>
+      </div>
+    </div>
+  </body>
+</html>

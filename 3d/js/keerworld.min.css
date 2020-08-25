@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+#main_canvas_container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+.absolute {
+  position: absolute;
+}
+.z-200 {
+  z-index: 200;
+}
+.icon {
+  font-size: 22px;
+  text-align: center;
+}
+.keer_home {
+  background-color: #eee;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  top: 20px;
+  left: 20px;
+}
+.keer_home .icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.keer_menu {
+  width: 100%;
+  bottom: 80px;
+  display: flex;
+  justify-content: space-around;
+}
+.keer_menu > div {
+  display: inline-flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.keer_operate {
+  padding: 10px 0;
+  background-color: #ddd;
+  width: 100%;
+  bottom: 0px;
+  display: flex;
+  justify-content: space-around;
+}
+.keer_operate > div {
+  display: inline-flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.keer_operate > div:last-child span {
+  background-color: pink;
+  padding: 10px;
+  border-radius: 15px;
+  color: #fff;
+}
